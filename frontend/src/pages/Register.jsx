@@ -1,18 +1,22 @@
 import { use, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSun,FaEyeSlash,FaEye } from "react-icons/fa";
 import { useTheme } from "../context/Theme";
 import { useAuth } from "../context/AuthProvider";
 
 const Register = () => {
   const navigate = useNavigate();
   const { fetchUser } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passerror, setPassError] = useState("");
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [error, setError] = useState("");
@@ -30,6 +34,11 @@ const Register = () => {
 
   setError("");
   setLoading(true);
+  if (formData.password !== formData.confirmPassword) {
+     setPassError("Passwords do not match");
+      return;
+  }
+  setPassError("");
 
   try {
     await api.post("/auth/register", formData);
@@ -115,14 +124,14 @@ const Register = () => {
       </div>
 
       {/* Password */}
-      <div className="mb-6">
+      <div className="mb-6 relative">
 
         <label className="block text-slate-300 mb-2">
           Password
         </label>
 
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Create a password"
           value={formData.password}
@@ -130,7 +139,46 @@ const Register = () => {
           className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white outline-none focus:border-green-500"
           required
         />
+
+        <button
+             type="button"
+             onClick={() => setShowPassword(!showPassword)}
+             className="absolute inset-y-0 right-2 top-8 flex items-center  text-gray-900 hover:text-gray-400">      
+             {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </button>
       </div>
+
+      {/*Confirm Password */}
+      
+              <div className="mb-6 relative w-full">
+      
+                  <label className="text-slate-300 text-sm block mb-2">
+                     Confirm Password
+                  </label>
+      
+                  <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      placeholder="Confirm password"
+                      className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white outline-none focus:border-blue-500"
+                      required
+                  />
+      
+                   <button
+                       type="button"
+                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                       className="absolute inset-y-0 right-2 top-7 flex items-center  text-gray-900 hover:text-gray-400">
+                       {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                  {passerror && (              
+                      <p className="text-red-500 text-sm mt-1">
+                       {passerror}
+                      </p>
+                      )}
+      
+              </div>
 
       <button
         type="submit"

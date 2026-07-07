@@ -10,7 +10,7 @@ import CreateServerModal from "../components/Dashboard/CreateServerModal";
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const {logout } = useAuth();
+    const {logout,user } = useAuth();
     const {selectedServer} = useServers();
     console.log("Selected:", selectedServer);
 
@@ -22,7 +22,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="h-full flex bg-slate-900 text-white">
+        <div className="h-screen flex bg-slate-900 text-white">
 
            <Sidebar openModal={() => setShowModal(true)} />
 

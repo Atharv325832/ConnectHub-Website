@@ -1,9 +1,12 @@
 import { useState,useContext } from "react";
 import { useNavigate,Link } from "react-router-dom";
 import api from "../services/api";
+import { FaEyeSlash,FaEye } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider";
 import { useTheme } from "../context/Theme";
 const Login = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [passerror, setPassError] = useState("");
     const { darkMode, toggleTheme } = useTheme();
     const navigate = useNavigate();
     const { login,fetchUser } = useAuth();
@@ -89,20 +92,28 @@ const Login = () => {
         </div>
 
         {/* Password */}
-        <div className="mb-6">
+        <div className="mb-6 relative w-full">
 
             <label className="text-slate-300 text-sm block mb-2">
                 Password
             </label>
 
             <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter password"
                 className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white outline-none focus:border-blue-500"
             />
+
+             <button
+                 type="button"
+                 onClick={() => setShowPassword(!showPassword)}
+                 className="absolute inset-y-0 right-2 top-7 flex items-center  text-gray-900 hover:text-gray-400">
+                 {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+
         </div>
 
         <button
