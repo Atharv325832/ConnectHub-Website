@@ -5,7 +5,10 @@ import {
     FaRocket
 } from "react-icons/fa";
 import Stat from "./Stat";
+import { useChannels } from "../../../context/ChannelContext";
+
 const Section = ({ server }) => {
+    const { channels } = useChannels();
     const stats = [
         {
             title: "Members",
@@ -15,7 +18,7 @@ const Section = ({ server }) => {
         },
         {
             title: "Channels",
-            value: server.channels.length,
+            value: channels.length,
             icon: <FaHashtag />,
             color: "bg-green-500"
         },

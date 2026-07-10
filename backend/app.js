@@ -2,9 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-
 const AuthRoutes = require("./routes/AuthRoutes");
 const serverRoutes = require("./routes/serverRoutes");
+const channelRoutes= require("./routes/channelRoutes");
 
 const app = express();
 app.use(
@@ -21,5 +21,7 @@ app.use(express.json());
 
 app.use('/api/auth', AuthRoutes);
 app.use('/api', serverRoutes);
+app.use('/api',channelRoutes);
+
 
 module.exports = { app, port };

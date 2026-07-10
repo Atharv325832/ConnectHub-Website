@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useServers } from "../../context/ServerContext";
+import { useServers } from "../../../context/ServerContext";
 
 const CreateServerModal = ({ show, close }) => {
     const { createServer } = useServers();

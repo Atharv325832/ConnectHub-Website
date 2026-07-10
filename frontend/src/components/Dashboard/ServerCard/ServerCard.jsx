@@ -4,13 +4,13 @@ import QuickActions from "./QuickActions";
 import ActivitySection from "./ActivitySection";
 
 
-const ServerCard = ({ server }) => {
+const ServerCard = ({ server, onChannelsClick,onInvite }) => {
 
     return (
 
         <div className="flex-1 overflow-y-auto bg-[#1e1f22]">
 
-            <HeroSection server={server} />
+            <HeroSection server={server} onInvite={onInvite} />
 
             <div className="px-8 py-6">
 
@@ -20,13 +20,14 @@ const ServerCard = ({ server }) => {
 
                     <div className="xl:col-span-2 space-y-6">
 
-                        <QuickActions />
-
+                        <QuickActions
+                            onChannelsClick={onChannelsClick}
+                        />
                         <ActivitySection />
 
                     </div>
 
-                    <div className="space-y-6"></div>    
+                    <div className="space-y-6"></div>
                 </div>
             </div>
         </div>

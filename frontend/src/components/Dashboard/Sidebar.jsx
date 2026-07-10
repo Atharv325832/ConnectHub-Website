@@ -76,7 +76,7 @@ const Sidebar = ({ openModal }) => {
 
                 {/* Add Server */}
                 <button
-                    onClick={openModal}
+                     onClick={openModal}
                     className="w-12 h-12 rounded-2xl bg-[#2b2d31] hover:bg-cyan-500 transition flex items-center justify-center text-white"
                 >
                     <FaPlus />

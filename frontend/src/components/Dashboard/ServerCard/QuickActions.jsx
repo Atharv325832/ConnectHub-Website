@@ -4,9 +4,10 @@ import {
     FaCalendarAlt,
     FaFolderOpen
 } from "react-icons/fa";
-import ActionButton from "./ActionButton";
+import { useState } from "react";
+import ActionButton from "./ActionButton"
 
-const QuickActions = () => {
+const QuickActions = ({onChannelsClick}) => {
     const actions = [
         {
             title: "Invite Friends",
@@ -20,7 +21,7 @@ const QuickActions = () => {
             description: "Add a new text channel",
             icon: <FaHashtag />,
             color: "bg-green-500",
-            onClick: () => console.log("Create Channel")
+            onClick: onChannelsClick
         },
         {
             title: "Schedule Event",
@@ -31,7 +32,8 @@ const QuickActions = () => {
         },
         {
             title: "Upload Files",
-            description: "Share documents & media",
+            // description: "Share documents & media",
+            description: "Feature coming soon.",
             icon: <FaFolderOpen />,
             color: "bg-purple-500",
             onClick: () => console.log("Upload Files")

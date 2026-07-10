@@ -1,6 +1,10 @@
-import { FaCog, FaUserPlus, FaGlobe } from "react-icons/fa";
+import { useState } from "react";
+import { FaCog, FaUserPlus, FaGlobe, FaEye, FaEyeSlash } from "react-icons/fa";
+import InviteModal from "../Modals/InviteModal";
 
-const HeroSection = ({ server }) => {
+const HeroSection = ({ server,onInvite }) => {
+    const [showInviteCode, setShowInviteCode] = useState(false);
+
     return (
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-cyan-600 via-blue-700 to-indigo-800">
 
@@ -20,8 +24,8 @@ const HeroSection = ({ server }) => {
                     <div>
 
                         <div className="flex items-center gap-2 text-cyan-100 text-sm">
-                             <FaGlobe />
-                             Public Community
+                            <FaGlobe />
+                            Public Community
                         </div>
 
                         <h1 className="mt-2 text-5xl font-bold text-white">
@@ -33,13 +37,22 @@ const HeroSection = ({ server }) => {
                         </p>
 
                         <div className="mt-4 inline-flex rounded-xl bg-white/10 px-4 py-2 backdrop-blur">
-                                <span className="text-sm text-slate-200">
+                            <span className="text-sm text-slate-200">
                                 Invite Code :
                             </span>
+                            <button
+                                onClick={()=>{setShowInviteCode(!showInviteCode)}}
+                                className="text-sm text-gray-400 p-1"
+                            >
+                                {showInviteCode ? <FaEyeSlash /> : <FaEye />}
+                            </button>
 
-                            <span className="ml-2 font-semibold text-white">
-                                {server.inviteCode}
-                            </span>
+                            {showInviteCode && (
+                                <span className="ml-2 font-semibold text-white">
+                                    {server.inviteCode}
+                                </span>
+                            )}
+
                         </div>
                     </div>
                 </div>
@@ -47,7 +60,7 @@ const HeroSection = ({ server }) => {
                 {/* Right */}
                 <div className="mt-8 flex gap-4 lg:mt-0">
 
-                    <button className="rounded-xl bg-cyan-400 px-5 py-3 font-medium text-slate-900 transition hover:bg-cyan-300">
+                    <button onClick={onInvite} className="rounded-xl bg-cyan-400 px-5 py-3 font-medium text-slate-900 transition hover:bg-cyan-300">
 
                         <div className="flex items-center gap-2">
                             <FaUserPlus />
