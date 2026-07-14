@@ -7,25 +7,25 @@ import {
 import { useState } from "react";
 import ActionButton from "./ActionButton"
 
-const QuickActions = ({onChannelsClick}) => {
+const QuickActions = ({channelModal, onInviteFriends}) => {
     const actions = [
         {
             title: "Invite Friends",
             description: "Grow your community",
             icon: <FaUserPlus />,
             color: "bg-cyan-500",
-            onClick: () => console.log("Invite Friends")
+            onClick: onInviteFriends
         },
         {
             title: "Create Channel",
             description: "Add a new text channel",
             icon: <FaHashtag />,
             color: "bg-green-500",
-            onClick: onChannelsClick
+            onClick: channelModal
         },
         {
             title: "Schedule Event",
-            description: "Plan community events",
+            description: "Feature coming soon.",
             icon: <FaCalendarAlt />,
             color: "bg-orange-500",
             onClick: () => console.log("Schedule Event")

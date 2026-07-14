@@ -37,7 +37,7 @@ const newUser = await authmodel.create({
     email,
     password: hashedPassword
 });
-const token =jwt.sign({id:newUser._id},process.env.JWT_SECRET,{expiresIn:'1h'});
+const token =jwt.sign({id:newUser._id},process.env.JWT_SECRET,{expiresIn:'7d'});
    res.cookie("token", token, {
     httpOnly: true,
     secure: false,      
@@ -73,7 +73,7 @@ console.log("Found User:", user);
     if(!isMatch){
         return res.status(400).json({message:"Invalid credentials"});
     }
-    const token =jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1h'});
+    const token =jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'7d'});
 
    res.cookie("token", token, {
     httpOnly: true,

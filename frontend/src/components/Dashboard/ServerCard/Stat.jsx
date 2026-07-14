@@ -1,6 +1,6 @@
-const Stat = ({ icon, title, value, iconBg }) => {
+const Stat = ({ icon, title, value, iconBg,onClick }) => {
     return (
-        <div className="group rounded-2xl bg-[#2b2d31] p-5 border border-[#3a3c43] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500 hover:shadow-xl">
+        <div onClick={onClick} className=" cursor-pointer group rounded-2xl bg-[#2b2d31] p-5 border border-[#3a3c43] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500 hover:shadow-xl">
       
             <div className="flex items-center justify-between">
          

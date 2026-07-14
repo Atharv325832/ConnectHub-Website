@@ -53,6 +53,7 @@ export const ServerProvider = ({ children }) => {
         <ServerContext.Provider
             value={{
                 servers,
+                setServers,
                 loading,
                 selectedServer,
                 setSelectedServer,

@@ -1,5 +1,7 @@
-const { Server } = require("../models/authmodel");
+const { Server } = require("../models/Server");
+const {Invite} = require("../models/invite")
 const uploadImage = require("../utils/utilUpload");
+const generateInviteCode = require("../utils/generateInviteCode");
 
 
 const createServer = async (req, res) => {
@@ -19,14 +21,22 @@ const createServer = async (req, res) => {
             );
             iconUrl = result.secure_url;
         }
+        const invite_code = generateInviteCode();
+
         const server = await Server.create({
             name,
             owner: req.user.id,
             icon: iconUrl,
             members: [req.user.id],
             channels: [],
-            inviteCode: Math.random().toString(36).substring(2, 8),
+            inviteCode: invite_code,
         });
+        await Invite.create({
+            type: "server",
+            code:invite_code,
+            server: server._id,
+            createdBy: req.user.id
+        })
         return res.status(201).json(server);
     } catch (err) {
         console.error(err);

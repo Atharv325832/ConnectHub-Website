@@ -5,6 +5,11 @@ const cookieParser = require("cookie-parser");
 const AuthRoutes = require("./routes/AuthRoutes");
 const serverRoutes = require("./routes/serverRoutes");
 const channelRoutes= require("./routes/channelRoutes");
+const inviteRoutes = require("./routes/inviteRoutes")
+const inviteRequestRoutes = require("./routes/inviteRequestRoutes")
+const getMembersRoutes =require("./routes/getMembersRoutes")
+const messageRoutes =require("./routes/messageRoutes")
+const searchUsers=require("./routes/searchUsers")
 
 const app = express();
 app.use(
@@ -22,6 +27,11 @@ app.use(express.json());
 app.use('/api/auth', AuthRoutes);
 app.use('/api', serverRoutes);
 app.use('/api',channelRoutes);
+app.use('/api/invite',inviteRoutes);
+app.use('/api/invite',inviteRequestRoutes);
+app.use('/api/servers',getMembersRoutes);
+app.use('/api',messageRoutes);
+app.use('/api/users',searchUsers);
 
 
 module.exports = { app, port };

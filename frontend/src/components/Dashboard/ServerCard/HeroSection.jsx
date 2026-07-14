@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaCog, FaUserPlus, FaGlobe, FaEye, FaEyeSlash } from "react-icons/fa";
 import InviteModal from "../Modals/InviteModal";
 
-const HeroSection = ({ server,onInvite }) => {
+const HeroSection = ({ server, onInvite, onJoinViaCode }) => {
     const [showInviteCode, setShowInviteCode] = useState(false);
 
     return (
@@ -16,11 +16,13 @@ const HeroSection = ({ server,onInvite }) => {
                 {/* Left */}
                 <div className="flex items-end gap-6">
 
-                    <img
-                        src={server.icon}
-                        alt={server.name}
-                        className="h-28 w-28 rounded-3xl border-4 border-[#1e1f22] object-cover shadow-2xl"
-                    />
+                    {server.icon && (
+                        <img
+                            src={server.icon}
+                            alt={server.name}
+                            className="h-28 w-28 rounded-3xl border-4 border-[#1e1f22] object-cover shadow-2xl"
+                        />
+                    )}
                     <div>
 
                         <div className="flex items-center gap-2 text-cyan-100 text-sm">
@@ -41,7 +43,7 @@ const HeroSection = ({ server,onInvite }) => {
                                 Invite Code :
                             </span>
                             <button
-                                onClick={()=>{setShowInviteCode(!showInviteCode)}}
+                                onClick={() => { setShowInviteCode(!showInviteCode) }}
                                 className="text-sm text-gray-400 p-1"
                             >
                                 {showInviteCode ? <FaEyeSlash /> : <FaEye />}
@@ -67,6 +69,14 @@ const HeroSection = ({ server,onInvite }) => {
                             Invite Friends
                         </div>
                     </button>
+                    <button onClick={onJoinViaCode} className="rounded-xl bg-cyan-400 px-5 py-3 font-medium text-slate-900 transition hover:bg-cyan-300">
+
+                        <div className="flex items-center gap-2">
+                            <FaUserPlus />
+                            Join Server via code
+                        </div>
+                    </button>
+
 
                     <button className="rounded-xl bg-white/10 p-4 backdrop-blur transition hover:bg-white/20">
                         <FaCog />

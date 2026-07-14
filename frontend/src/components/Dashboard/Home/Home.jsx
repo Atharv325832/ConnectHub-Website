@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useChannels } from "../../../context/ChannelContext";
 import ChannelRenameModal from "../Modals/ChannelRenameModal";
-import InviteModal from "../Modals/InviteModal"
+import InviteModal from "../Modals/InviteModal";
+import ChatWindow from "../Chat/ChatWindow";
 
 export default function Home({ channelModal, user, server, onInvite }) {
-  const { channels, deleteChannel, rename } = useChannels();
+  const { channels, deleteChannel, rename, setSelectedChannel, selectedChannel } = useChannels();
 
   const [active, setActive] = useState(channels[0]);
   const [openMenuId, setOpenMenuId] = useState(null);
@@ -79,11 +80,13 @@ export default function Home({ channelModal, user, server, onInvite }) {
         {textChannels.map((c) => (
           <div
             key={c._id}
-            className={`group relative mb-1 flex items-center rounded-lg ${active?._id === c._id ? "bg-indigo-600" : "hover:bg-slate-900"
+            className={`group relative mb-1 flex items-center rounded-lg ${selectedChannel?._id === c._id
+              ? "bg-indigo-600"
+              : "hover:bg-slate-900"
               }`}
           >
             <button
-              onClick={() => setActive(c)}
+              onClick={() => setSelectedChannel(c)}
               className="flex-1 px-3 py-2 text-left"
             >
               # {c.name}
@@ -98,33 +101,6 @@ export default function Home({ channelModal, user, server, onInvite }) {
             >
               ⋮
             </button>
-            {openMenuId === c._id && (
-              <div ref={menuRef} className="absolute right-2 top-full z-10 mt-1 w-40 rounded-md border border-slate-700 bg-slate-800 shadow-lg">
-                <button
-                  onClick={() => {
-                    setEditingChannel(c);
-                    setNewName(c.name);
-                  }}
-                  className="block w-full px-3 py-2 text-left hover:bg-slate-700"
-                >
-                  Rename
-                </button>
-
-                <button className="block w-full px-3 py-2 text-left hover:bg-slate-700">
-                  Invite Friends
-                </button>
-
-                <button onClick={() => handleDelete(c._id)} className="block w-full px-3 py-2 text-left text-red-400 hover:bg-slate-700">
-                  Delete Channel
-                </button>
-              </div>
-            )}
-            <ChannelRenameModal
-              open={!!editingChannel}
-              channel={editingChannel}
-              onClose={() => setEditingChannel(null)}
-              onSave={handleRename}
-            />
           </div>
         ))}
 
@@ -183,6 +159,9 @@ export default function Home({ channelModal, user, server, onInvite }) {
           </div>
         ))}
       </aside>
+      <main className="flex-1">
+       
+      </main>
     </div>
   );
 }

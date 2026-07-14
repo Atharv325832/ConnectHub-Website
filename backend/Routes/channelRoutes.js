@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 
 router.post("/channels", authMiddleware, createChannel);
-router.get("/channels",authMiddleware,getChannels);
+router.get("/channels/:server_id",authMiddleware,getChannels);
 router.delete("/channel/:id",authMiddleware,deleteChannel);
 router.patch("/channel/:id", authMiddleware, updateChannel);
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function InviteModal({ server, onClose }) {
   const [copied, setCopied] = useState(false);
 
-  const inviteLink = `${window.location.origin}/invite/${server.inviteCode}`;
+  const inviteLink = `${window.location.origin}/invite/link/${server.inviteCode}`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(inviteLink);

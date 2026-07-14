@@ -6,33 +6,39 @@ import {
 } from "react-icons/fa";
 import Stat from "./Stat";
 import { useChannels } from "../../../context/ChannelContext";
+import { useServers } from "../../../context/ServerContext";
 
-const Section = ({ server }) => {
+const Section = ({ server, fetchMembers,onRecievedInvite }) => {
     const { channels } = useChannels();
+    const { selectedServer, fetchServers } = useServers();
     const stats = [
         {
             title: "Members",
             value: server.members.length,
             icon: <FaUsers />,
-            color: "bg-cyan-500"
+            color: "bg-cyan-500",
+            onClick:fetchMembers 
         },
         {
             title: "Channels",
             value: channels.length,
             icon: <FaHashtag />,
-            color: "bg-green-500"
+            color: "bg-green-500",
+            onClick:console.log("Hello")
         },
         {
             title: "Messages",
-            value: "245",
+            value: "0",
             icon: <FaComments />,
-            color: "bg-orange-500"
+            color: "bg-orange-500",
+            onClick:console.log("Hello")
         },
         {
-            title: "Community",
-            value: "Lv.5",
+            title: "Friends",
+            value: "0",
             icon: <FaRocket />,
-            color: "bg-purple-500"
+            color: "bg-purple-500",
+            onClick: onRecievedInvite
         }
     ];
 
@@ -46,6 +52,7 @@ const Section = ({ server }) => {
                     value={stat.value}
                     icon={stat.icon}
                     iconBg={stat.color}
+                    onClick={stat.onClick}
                 />
             ))}
         </div>

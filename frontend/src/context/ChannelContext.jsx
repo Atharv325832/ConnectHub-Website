@@ -1,14 +1,23 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../services/api";
+import { useServers } from "./ServerContext";
 
 const ChannelContext = createContext();
 
 export const ChannelProvider = ({ children }) => {
   const [channels, setChannels] = useState([]);
+  const [selectedChannel, setSelectedChannel] = useState(null);
+  const {
+    servers,
+    selectedServer,
+    setSelectedServer,
+    loading,
+  } = useServers();
 
   const fetchChannels = async () => {
     try {
-      const { data } = await api.get("/channels");
+      if (!selectedServer) return;
+      const { data } = await api.get(`/channels/${selectedServer._id}`);
       setChannels(data);
     } catch (err) {
       console.error(err);
@@ -21,8 +30,11 @@ export const ChannelProvider = ({ children }) => {
     return res.data;
   };
   useEffect(() => {
-    fetchChannels();
-  }, []);
+    if (selectedServer) {
+      fetchChannels();
+      setSelectedChannel(null);
+    }
+  }, [selectedServer]);
 
   const deleteChannel = async (id) => {
     console.log("Deleting:", id);
@@ -48,7 +60,7 @@ export const ChannelProvider = ({ children }) => {
 
 
   return (
-    <ChannelContext.Provider value={{ channels, setChannels, createChannel, fetchChannels, deleteChannel,rename}}>
+    <ChannelContext.Provider value={{ channels, setSelectedChannel, selectedChannel, setChannels, createChannel, fetchChannels, deleteChannel, rename }}>
       {children}
     </ChannelContext.Provider>
   );

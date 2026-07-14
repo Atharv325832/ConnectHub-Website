@@ -1,4 +1,4 @@
-const { Channel, Server } = require('../models/authmodel')
+const { Channel} = require('../models/channel')
 
 const createChannel = async (req, res) => {
   try {
@@ -36,13 +36,26 @@ const createChannel = async (req, res) => {
 
 const getChannels = async (req, res) => {
   try {
-    const channels = await Channel.find().sort({ createdAt: 1 });
+    const {server_id}  = req.params;
+
+    if (!server_id) {
+      return res.status(400).json({
+        message: "Server ID is required",
+      });
+    }
+
+    const channels = await Channel.find({ Server: server_id })
+      .sort({ createdAt: 1 });
+
     res.status(200).json(channels);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Failed to fetch channels" });
+    res.status(500).json({
+      message: "Failed to fetch channels",
+    });
   }
 };
+
 const deleteChannel = async (req, res) => {
   try {
     if (!req.user) {
