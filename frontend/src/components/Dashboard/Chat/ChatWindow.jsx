@@ -3,10 +3,11 @@ import { useChannels } from "../../../context/ChannelContext";
 import { useMessages } from "../../../context/MessageContext";
 import MessageCard from "./MessageCard";
 import MessageInput from "./MessageInput";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import socket from "../../../socket";
 
 const ChatWindow = () => {
+    const [replyMessage, setReplyMessage] = useState(null);
     const messagesEndRef = useRef(null);
     const { selectedChannel, setSelectedChannel } = useChannels();
     const { messages, sendMessage } = useMessages();
@@ -64,6 +65,7 @@ const ChatWindow = () => {
                             <MessageCard
                                 key={message._id}
                                 message={message}
+                                onReply={setReplyMessage}
                             />
                         ))}
 
@@ -73,7 +75,10 @@ const ChatWindow = () => {
             </div>
 
             {/* Input */}
-            <MessageInput onSend={sendMessage} />
+            <MessageInput
+                onSend={sendMessage}
+                replyMessage={replyMessage}
+                setReplyMessage={setReplyMessage} />
         </div>
     );
 };

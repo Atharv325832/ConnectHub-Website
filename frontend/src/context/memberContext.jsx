@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import api from "../services/api";
+import socket from "../socket";
 
 const MembersContext = createContext();
 
@@ -8,6 +9,7 @@ export const MembersProvider = ({ children }) => {
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showMembersModal, setShowMembersModal] = useState(false);
+    const [onlineUsers, setOnlineUsers] = useState([]);
 
     const fetchMembers = async (serverId) => {
 
@@ -39,6 +41,28 @@ export const MembersProvider = ({ children }) => {
 
     };
 
+    useEffect(() => {
+        socket.on("onlineUsers", (users) => {
+            setOnlineUsers(users);
+        });
+
+        socket.on("userOnline", (userId) => {
+            setOnlineUsers((prev) => [...new Set([...prev, userId])]);
+        });
+
+        socket.on("userOffline", (userId) => {
+            setOnlineUsers((prev) =>
+                prev.filter((id) => id !== userId)
+            );
+        });
+
+        return () => {
+            socket.off("onlineUsers");
+            socket.off("userOnline");
+            socket.off("userOffline");
+        };
+    }, []);
+
     return (
 
         <MembersContext.Provider
@@ -47,7 +71,8 @@ export const MembersProvider = ({ children }) => {
                 loading,
                 showMembersModal,
                 fetchMembers,
-                closeMembersModal
+                closeMembersModal,
+                onlineUsers
             }}
         >
 

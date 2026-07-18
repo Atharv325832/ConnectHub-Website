@@ -1,9 +1,28 @@
 const mongoose = require("mongoose");
 
+const attachmentSchema = new mongoose.Schema(
+    {
+        url: { type: String, required: true },
+        public_id: { type: String },
+        name: { type: String, required: true },
+        type: { type: String, required: true },
+        size: { type: Number, required: true },
+    },
+    { _id: false }
+);
+
+const reactionSchema = new mongoose.Schema({
+    emoji: String,
+    users: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "auth"
+    }]
+}, { _id: false });
+
 const messageSchema = new mongoose.Schema(
     {
         content: {
-            type: String,            
+            type: String,
             trim: true,
         },
 
@@ -27,14 +46,12 @@ const messageSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
-        attachments: [
-            {
-                url: String,
-                type: String,
-                size: Number,
-                name: String
-            }
-        ],
+        attachments: {
+            type: [attachmentSchema],
+            default: [],
+        },
+        reactions: [reactionSchema],
+
         deleted: {
             type: Boolean,
             default: false
@@ -71,4 +88,4 @@ const DmSchema = new mongoose.Schema({
 const Message = mongoose.model("Message", messageSchema);
 const Dm = mongoose.model("Dm", DmSchema);
 
-module.exports = {Message, Dm };
+module.exports = { Message, Dm };

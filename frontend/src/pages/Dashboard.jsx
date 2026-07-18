@@ -72,7 +72,7 @@ const Dashboard = () => {
                     ) : selectedServer ? (
                         <ServerCard
                             server={selectedServer}
-                            ChannelModal={() => setShowChannelModal(true)}
+                            channelModal={() => setShowChannelModal(true)}
                             onFriendInvite={() => setShowFriendModal(true)}
                             onInvite={() => setShowInviteModal(true)}
                             onJoinViaCode={() => setViaCode(true)}

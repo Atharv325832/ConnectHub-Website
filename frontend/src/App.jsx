@@ -7,8 +7,10 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Proutes from "./components/Proutes";
 import InvitePage from "./pages/InvitePage";
+import { useAuth } from "./context/AuthProvider";
 
 function App() {
+  const { user } = useAuth();
   useEffect(() => {
     socket.connect();
     socket.on("connect", () => {
@@ -27,6 +29,14 @@ function App() {
       socket.disconnect();
     };
   }, []);
+
+
+
+  useEffect(() => {
+    if (!user) return;
+
+    socket.emit("userOnline", user._id);
+  }, [user]);
 
   return (
 

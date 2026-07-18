@@ -5,7 +5,8 @@ const MemberModal = () => {
     const {
         members,
         showMembersModal,
-        closeMembersModal
+        closeMembersModal,
+        onlineUsers
     } = useMembers();
 
     if (!showMembersModal) return null;
@@ -40,6 +41,12 @@ const MemberModal = () => {
                             key={member._id}
                             className="flex items-center gap-3"
                         >
+                            <div
+                                className={`w-2 h-2 rounded-full ${onlineUsers.includes(member._id)
+                                        ? "bg-green-500"
+                                        : "bg-gray-400"
+                                    }`}
+                            />
 
                             <img
                                 src={member.avatar}
